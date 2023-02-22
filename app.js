@@ -112,6 +112,10 @@ const start = async () => {
     //   )
     const adminRouter = AdminJSExpress.buildRouter(admin)
       app.use(admin.options.rootPath, adminRouter)
+
+      app.get('/',(req,res)=>{
+        return res.send('Working');
+      })
       
       app.listen(PORT, () => {
         console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
