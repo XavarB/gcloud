@@ -25,7 +25,7 @@ AdminJS.registerAdapter({
   Database: AdminJSMongoose.Database,
 })
 
-const PORT = 3008
+const PORT = 3000
 const DEFAULT_ADMIN = {
   email: 'admin@example.com',
   password: 'password',
