@@ -77,7 +77,7 @@ const start = async () => {
 
   try {
     await mongoose.connect(
-      "mongodb://localhost:27017/agency"
+      "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
       );
     } catch (error) {
       console.error(error);
