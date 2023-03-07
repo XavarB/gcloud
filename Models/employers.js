@@ -1,4 +1,4 @@
-const mongoose  = require ('mongoose');
+import mongoose from 'mongoose'
 
 
 const EmployersSchema = new mongoose.Schema(
@@ -23,6 +23,6 @@ const EmployersSchema = new mongoose.Schema(
   // { timestamps: true },
 )
 
-   const Employers = mongoose.model('Employers', EmployersSchema);
-   module.exports = { Employers };
+   export const Employers = mongoose.model('Employers', EmployersSchema);
+  //  module.exports = { Employers };
    

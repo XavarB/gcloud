@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 
 const ExpenseSchema = new mongoose.Schema(
   {
+    name: { type: 'String', required:true },
     // Pakistan
     office_exp_p: { type: Number,  },
     salaries_p: { type: Number,  },
@@ -25,5 +26,5 @@ const ExpenseSchema = new mongoose.Schema(
   // { timestamps: true },
 )
 
-const Expense = mongoose.model('Expense', ExpenseSchema);
-module.exports = { Expense };
+export const Expense = mongoose.model('Expense', ExpenseSchema);
+// module.exports = { Expense };

@@ -1,4 +1,4 @@
-const mongoose  = require ('mongoose');
+import mongoose from 'mongoose'
 
 
 const AgentSchema = new mongoose.Schema(
@@ -16,5 +16,5 @@ const AgentSchema = new mongoose.Schema(
   // { timestamps: true },
 )
 
-   const Agent = mongoose.model('Agent', AgentSchema);
-   module.exports = { Agent };
+  export const Agent = mongoose.model('Agent', AgentSchema);
+  //  module.exports = { Agent };

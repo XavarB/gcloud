@@ -1,0 +1,74 @@
+.aqua{
+    background-color: black;
+}
+.counter
+{
+    background-color: #eaecf0;
+    text-align: center;
+}
+.employees,.customer,.design,.order
+{
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+.counter-count
+{
+    font-size: 18px;
+    background-color: #00b3e7;
+    border-radius: 50%;
+    position: relative;
+    color: #ffffff;
+    text-align: center;
+    line-height: 92px;
+    width: 92px;
+    height: 92px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    display: inline-block;
+}
+
+.employee-p,.customer-p,.order-p,.design-p
+{
+    font-size: 24px;
+    color: #000000;
+    line-height: 34px;
+}
+
+
+
+
+
+
+body{
+    font-size:18px;
+    font-weight: 400;
+}
+.p-y-2 {
+padding-top: 28px;
+padding-bottom: 28px;
+}
+.p-y-3 {
+padding-top: 45px;
+padding-bottom: 45px;
+}
+.m-b-1 {
+margin-bottom: 18px; 
+}
+.m-t-1 { 
+margin-top: 18px;
+}
+
+.main_counter_area{
+    
+    background-size: cover;
+    overflow: hidden;
+}
+.main_counter_area .main_counter_content .single_counter{
+    background: #000000;
+        color: #fff;
+}
+.main_counter_area .main_counter_content .single_counter i{
+    font-size:36px;
+}
