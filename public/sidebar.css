@@ -1,4 +1,9 @@
-.aqua{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Quicksand:wght@300&display=swap');
+
+*{
+    font-family: 'Quicksand', sans-serif!important;
+}
+/* .aqua{
     background-color: black;
 }
 .counter
@@ -71,4 +76,66 @@ margin-top: 18px;
 }
 .main_counter_area .main_counter_content .single_counter i{
     font-size:36px;
+} */
+.counter-section i { display:block; margin:0 0 10px}
+.counter-section span.counter { font-size:40px; color:#000; line-height:60px; display:block; font-family: "Oswald",sans-serif; letter-spacing: 2px}
+.counter-title{ font-size:12px; letter-spacing:2px; text-transform: uppercase}
+.counter-icon {top:25px; position:relative}
+.counter-style2 .counter-title {letter-spacing: 0.55px; float: left;}
+.counter-style2 span.counter {letter-spacing: 0.55px; float: left; margin-right: 10px;}
+.counter-style2 i {float: right; line-height: 26px; margin: 0 10px 0 0}
+.counter-subheadline span {float: right;}  
+
+.medium-icon {
+    font-size: 40px !important;
+    margin-bottom: 15px !important;
+} 
+
+.container{
+    margin-top:200px;
 }
+
+/* 
+:root {
+    --topbar-color: white;
+    --sidebar-bg-color: darkgray;
+    --sidebar-color: white;
+    --sidebar-link-color: orange;
+  }
+  
+  section[data-css="sidebar"] {
+    background-color: var(--sidebar-bg-color) !important;
+    color: var(--sidebar-color);
+    border: none;
+  }
+  
+  section[data-css="sidebar"] svg {
+    fill: var(--sidebar-color) !important;
+  }
+  
+  a[data-css="sidebar-logo"] {
+    background-color: var(--sidebar-bg-color) !important;
+  }
+  
+  section[data-css="sidebar-resources"] {
+    background: var(--sidebar-bg-color) !important;
+  }
+  
+  [data-css="sidebar"] section a {
+    background: var(--sidebar-bg-color) !important;
+    color: var(--sidebar-color);
+  }
+  
+  [data-css="sidebar"] a:hover {
+    color: var(--sidebar-link-color);
+  } */
+
+
+  /* a[data-css="Income-new-button"] {
+    background-color: #FAC515 !important;
+  } */
+/* 
+  [data-css="app-content"] section section section section section  a:first-child {
+    background: #FAC515 !important;
+    color: var(--sidebar-color);
+  } */

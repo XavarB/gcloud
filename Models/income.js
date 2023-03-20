@@ -1,19 +1,18 @@
 import mongoose from 'mongoose'
+import { ClientsS1 } from './clientsS1.js';
 
 
 const IncomeSchema = new mongoose.Schema(
   {
-    name: { type: 'String', required:true },
-    client_inc: { type: Number,  },
-    agent_agency_inc: { type: Number,  },
-    employer_inc: { type: Number,  },
-    medical_exp: { type: Number,  },
-    others: { type: Number,  },
-   
-  
-  
-  
-  
+    Name: { type: 'String', required:true },
+    Client_income: { type: Number,  },
+    Agent_or_Agency_income: { type: Number,  },
+    Employer_income: { type: Number,  },
+    other_Incomes: { type: Number,  },
+    client: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ClientsS1"
+    }
   }
   // {
   // },

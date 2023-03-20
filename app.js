@@ -6,11 +6,10 @@ import  session from 'express-session'
 import  MongoDBSession from 'connect-mongodb-session';
 import  cors from 'cors'
 import bodyParser from 'body-parser'
-
 // var  from '.js')
 
 import  AdminJSMongoose from '@adminjs/mongoose';
-import  {ClientsS1} from './Models/clientsS1.js';
+
 import  {Employees} from './Models/employees.js'
 import  {Agent} from './Models/agent.js'
 import  {Employers} from './Models/employers.js'
@@ -18,19 +17,22 @@ import  {Employers} from './Models/employers.js'
 import  {Income} from './Models/income.js'
 import  {Expense} from './Models/expense.js'
 import {Users} from './Models/users.js'
-import fileDirName from './file-dir-name.js'
-import path from 'path'
+
+import { files } from './Resources/files.js';
+
+
+// Resource Imports
+import {clientResource} from './Resources/clientResource.js';
 
 const MongoDBStore = MongoDBSession(session)
-const { ComponentLoader } = AdminJS
 
-const componentLoader = new ComponentLoader()
-const {__dirname,__filename} = fileDirName(import.meta)
 
-const Components = {
-  Dashboard: componentLoader.add('Dashboard', path.join(__dirname,'dashboard')),
-  // other custom components
-}
+import pdfGenerator from './component/Pdf.js'
+
+// Import Components
+import path from 'path'
+import {Components,componentLoader,__dirname} from './component/componentInit.js'
+
 
 
 AdminJS.registerAdapter({
@@ -38,7 +40,7 @@ AdminJS.registerAdapter({
   Database: AdminJSMongoose.Database,
 })
 
-const PORT = process.env.PORT || 8888
+const PORT = process.env.PORT || 3490
 const DEFAULT_ADMIN = {
   email: 'admin@example.com',
   password: 'password',
@@ -57,7 +59,10 @@ const dashboardHandler = async () => {
   // Asynchronous code where you, e. g. fetch data from your database
   const allUsers = await Users.find();
   const allClientsS1 = await ClientsS1.find();
-  return { message: 'Hello World', users:allUsers, clients: allClientsS1, currentRole:currentAdmin.role }
+  const allEmployees = await Employees.find();
+  const allExpense = await Expense.find();
+  const allIncome = await Income.find();
+  return { message: 'Hello World', users:allUsers, clients: allClientsS1,employees:  allEmployees,expense:allExpense,income:allIncome,  }
   // return { ClientsS1:allClientsS1 }
 }
 
@@ -77,7 +82,8 @@ const start = async () => {
 
   try {
     await mongoose.connect(
-      "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
+      // "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
+      "mongodb://localhost:27017/agency"
       );
     } catch (error) {
       console.error(error);
@@ -113,7 +119,8 @@ const start = async () => {
     },
       branding: {
         companyName: 'Farishta Enterprise',
-        logo:'https://aakifraza.com/visuals/logo.svg',
+        logo:'https://imgbox.io/ib/4JGEklMIgL.jpg',
+        // logo: <img src="Compnents/assets/logo.jpg" alt="logo" />,
         withMadeWithLove:false,
         softwareBrothers:false,
       },
@@ -125,69 +132,25 @@ const start = async () => {
         handler:dashboardHandler,
       },
       resources: [
-        {
-          resource:  ClientsS1,
-          options:{
-            actions:{
-              new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
-              },
-              list:{
-                isAccessible:({currentAdmin})=>currentAdmin.role ==='admin'  || currentAdmin.role ==='editor' || currentAdmin.role ==='guest',
-              },
-              delete:{
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
-              },
-              bulkDelete:{
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
-              },
-              edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
-              },
-              show: {
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
-              },
-            }
-          }
-        },
+        clientResource,
+       
         {
           resource:  Employees,
           options:{
             actions:{
+              PdfGen: {
+                actionType: 'record',
+                icon: 'GeneratePdf',
+                component: Components.PdfGen,
+                handler: (request, response, context) => {
+                    const { record, currentAdmin } = context
+                    return {
+                        record: record.toJSON(currentAdmin),
+                        url: pdfGenerator(record.toJSON(currentAdmin),'employees')
+                    }
+                }
+            },
               new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
               },
               list:{
@@ -196,24 +159,10 @@ const start = async () => {
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
+              bulkDelete:{
+                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+              },
               edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
               show: {
@@ -230,13 +179,20 @@ const start = async () => {
           resource:  Agent,
           options:{
             actions:{
+              PdfGen: {
+                actionType: 'record',
+                icon: 'GeneratePdf',
+                component: Components.PdfGen,
+                handler: (request, response, context) => {
+                    const { record, currentAdmin } = context
+                    return {
+                        record: record.toJSON(currentAdmin),
+                        url: pdfGenerator(record.toJSON(currentAdmin),'agent')
+                    }
+                }
+            },
               new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
+               
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
               },
               list:{
@@ -245,31 +201,13 @@ const start = async () => {
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
+              bulkDelete:{
+                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+              },
               edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
               show: {
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
             }
@@ -280,13 +218,19 @@ const start = async () => {
           resource:  Employers,
           options:{
             actions:{
+              PdfGen: {
+                actionType: 'record',
+                icon: 'GeneratePdf',
+                component: Components.PdfGen,
+                handler: (request, response, context) => {
+                    const { record, currentAdmin } = context
+                    return {
+                        record: record.toJSON(currentAdmin),
+                        url: pdfGenerator(record.toJSON(currentAdmin),'employees')
+                    }
+                }
+            },
               new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
               },
               list:{
@@ -295,24 +239,10 @@ const start = async () => {
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
+              bulkDelete:{
+                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+              },
               edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
               show: {
@@ -328,14 +258,29 @@ const start = async () => {
         {
           resource:  Expense,
           options:{
+            properties:{
+              expenseTotal:{
+                type:'String',
+                components:{
+                  show:Components.ExpenseTotal,
+                  list:Components.ExpenseTotal,
+                }
+              }
+            },
             actions:{
+              PdfGen: {
+                actionType: 'record',
+                icon: 'GeneratePdf',
+                component: Components.PdfGen,
+                handler: (request, response, context) => {
+                    const { record, currentAdmin } = context
+                    return {
+                        record: record.toJSON(currentAdmin),
+                        url: pdfGenerator(record.toJSON(currentAdmin),'expense')
+                    }
+                }
+            },
               new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor',
               },
               list:{
@@ -344,50 +289,45 @@ const start = async () => {
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
+              bulkDelete:{
+                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+              },
               edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
               show: {
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'|| currentAdmin.role ==='editor',
               },
             }
           }
         },
-
-
         {
           resource: Income,
           options:{
-            
+            properties:{
+              incomeTotal:{
+                type:'String',
+                components:{
+                  show:Components.IncomeTotal,
+                  list:Components.IncomeTotal,
+                }
+              }
+            },
             actions:{
+              PdfGen: {
+                actionType: 'record',
+                icon: 'GeneratePdf',
+                component: Components.PdfGen,
+                handler: (request, response, context) => {
+                    const { record, currentAdmin } = context
+                    return {
+                        record: record.toJSON(currentAdmin),
+                        url: pdfGenerator(record.toJSON(currentAdmin),'income')
+                    }
+                }
+            },
               new: {
-                before: async (request) => {
-                  if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
-                  }
-                  return request;
-                },
+               
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor',
               },
               list:{
@@ -396,36 +336,22 @@ const start = async () => {
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'
               },
+              bulkDelete:{
+                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+              },
               edit: {
-                before: async (request) => {
-                  // no need to hash on GET requests, we'll remove passwords there anyway
-                  if (request.method === 'post') {
-                    // hash only if password is present, delete otherwise
-                    // so we don't overwrite it
-                    if (request.payload?.password) {
-                      request.payload.password = hash(request.payload.password);
-                    } else {
-                      delete request.payload?.password;
-                    }
-                  }
-                  return request;
-                },
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
+               
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
               show: {
-                after: async (response) => {
-                  response.record.params.password = '';
-                  return response;
-                },
+                
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
               },
             }
           }
         },
+      
+        
      {
         resource: Users,
         options: {
@@ -433,7 +359,7 @@ const start = async () => {
             new: {
               before: async (request) => {
                 if (request.payload?.password) {
-                  request.payload.password = hash(request.payload.password);
+                  request.payload.password = (request.payload.password);
                 }
                 return request;
               },
@@ -447,12 +373,12 @@ const start = async () => {
             },
             edit: {
               before: async (request) => {
-                // no need to hash on GET requests, we'll remove passwords there anyway
+                // no need to  on GET requests, we'll remove passwords there anyway
                 if (request.method === 'post') {
-                  // hash only if password is present, delete otherwise
+                  //  only if password is present, delete otherwise
                   // so we don't overwrite it
                   if (request.payload?.password) {
-                    request.payload.password = hash(request.payload.password);
+                    request.payload.password = (request.payload.password);
                   } else {
                     delete request.payload?.password;
                   }
@@ -475,8 +401,11 @@ const start = async () => {
             },
             delete:{
               isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'
-            }
-          },
+            },
+            bulkDelete:{
+              isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+            },
+            },
           properties: {
             password: {
               isVisible: {
@@ -489,11 +418,32 @@ const start = async () => {
           },
         },
       },
+      files,
     ],
+    // Code for PDF generation
+  //   const : orderResource = {
+  //     resource: Order,
+  //     options: {
+  //         actions: {
+  //             PDFGenerator: {
+  //                 actionType: 'record',
+  //                 icon: 'GeneratePdf',
+  //                 component: Components.PDFGenerator,
+  //                 handler: (request, response, context) => {
+  //                     const { record, currentAdmin } = context
+  //                     return {
+  //                         record: record.toJSON(currentAdmin),
+  //                         url: pdfgenerator(record.toJSON(currentAdmin))
+  //                     }
+  //                 }
+  //             }
+  //         }
+  //     }
+  // },
     componentLoader
     }
     const admin = new AdminJS(adminOptions)
-    // admin.overrideLogin({ component: Components.Dashboard })
+
     admin.watch()
     
     const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
@@ -519,6 +469,7 @@ const start = async () => {
     // const adminRouter = AdminJSExpress.buildRouter(admin)
       app.use(admin.options.rootPath, adminRouter)
       app.use(express.static(path.join(__dirname, "./public")));
+      app.use(express.static(path.join(__dirname, "./pdfs")));
 
       app.get('/',(req,res)=>{
         return res.send('Working');

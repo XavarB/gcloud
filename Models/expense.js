@@ -1,21 +1,26 @@
 import mongoose from 'mongoose'
-
+import { ClientsS1 } from './clientsS1.js';
 
 const ExpenseSchema = new mongoose.Schema(
   {
-    name: { type: 'String', required:true },
+    Name: { type: 'String', required:true },
+    Medical_expenses: { type: Number,  },
     // Pakistan
-    office_exp_p: { type: Number,  },
-    salaries_p: { type: Number,  },
-    gov_fee_p: { type: Number,  },
-    comission_p: { type: Number,  },
-    others_p: { type: Number,  },
+    Pakistan_Office_exp: { type: Number,  },
+    Pakistan_Sal: { type: Number,  },
+    Pakistan_Gov_fee: { type: Number,  },
+    Pakistan_Comission: { type: Number,  },
+    Others_Pakistan_exp: { type: Number,  },
     // Malaysia
-    office_exp_m: { type: Number,  },
-    salaries_m: { type: Number,  },
-    gov_fee_m: { type: Number,  },
-    comission_m: { type: Number,  },
-    others_m: { type: Number,  },
+    Malaysia_Office_exp: { type: Number,  },
+    Malaysia_sal: { type: Number,  },
+    Malaysia_Gov_fee: { type: Number,  },
+    Malaysia_Comission: { type: Number,  },
+    Others_Malaysia_exp: { type: Number,  },
+    client: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ClientsS1"
+    }
   
   
   

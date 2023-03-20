@@ -1,42 +1,49 @@
 import mongoose from 'mongoose'
-
+// import { files } from '../Resources/files.js';
+import { Expense } from './expense.js';
+import { Income } from './income.js';
 
 const ClientsS1Schema = new mongoose.Schema(
   {
-    name: { type: 'String', required:true },
-    address: { type: 'String', required:true},
-    photo: { type: 'object', },
-    contact: { type: 'String',required:true },
-    dob: { type: 'date', required:true},
-    passport_no: { type: 'string', },
-    passport_exp_date: { type: 'date', },
-    cnic: { type: Number, },
-    qualification: { type: 'String', },
-    trade_applied: { type: 'String', },
-    country_applied: { type: 'String', },
-    reference: { type: 'String', },
-    local_exp_yrs: { type: Number, },
-    foreign_exp_country: { type: 'String', },
-    foreign_exp_yrs: { type: Number, },
-    languages: { type: 'String', },
+    Name: { type: 'String', required:true },
+    Address: { type: 'String', required:true},
+    Photo: { type: 'object', },
+    Contact: { type: 'String',required:true },
+    Date_of_birth: { type: 'date', required:true},
+    Passport_number: { type: 'string', },
+    Passport_expiry_date: { type: 'date', },
+    CNIC: { type: Number, },
+    Qualification: { type: 'String', },
+    Trade_applied_for: { type: 'String', },
+    Country_applied_for: { type: 'String', },
+    Reffered_by_agent_or_agency_or_self: { type: 'String', },
+    Years_of_local_experiance: { type: Number, },
+    Country_of_foreign_experiance: { type: 'String', },
+    Years_of_foreign_experiance: { type: Number, },
+    Languages_english_urdu_arabic_etc: { type: 'String', },
     // ---------------
-    med_photo: { type: 'object', },
-    contract_photo: { type: 'object', },
-    contract_sub_date: { type: 'date', },
-    payment_ttl: { type: Number,  },
-    payment_pyd: { type: Number,  },
-    payment_lft: { type: Number,  },
+    Medical_photograph: { type: 'object', },
+    Contract_photograph: { type: 'object', },
+    Contract_submission_date: { type: 'date', },
+    Total_payment: { type: Number,  },
+    Payment_paid: { type: Number,  },
+    Payment_balance: { type: Number,  },
     
     // -----------------
     
-    calling_date: { type: 'date', },
-    protector_date: { type: 'date', },
-    visa_status: { type: 'String', },
-    airline_ticket: { type: 'String', },
-    flying_date: { type: 'date', },
+    Calling_date: { type: 'date', },
+    Protector_date: { type: 'date', },
+    Visa_status: { type: 'String', },
+    Airline_ticket: { type: 'String', },
+    Flying_date: { type: 'date', },
+    // path:{type: 'string' | null},
+    // // bucket: { type: 'String',  },
+    // // mime: { type: 'String',  },
     
   
-  
+    income :  { type: mongoose.Schema.Types.ObjectId, ref: 'Income' },
+    expense :  { type: mongoose.Schema.Types.ObjectId, ref: 'Expense' }, 
+    files :  { type: mongoose.Schema.Types.ObjectId, ref: 'File' } ,
   
   
   }
