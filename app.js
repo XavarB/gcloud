@@ -92,7 +92,7 @@ const start = async () => {
       process.exit(1);
     }
     var store = new MongoDBStore({
-      uri: 'mongodb://localhost:27017/sessions',
+      uri: "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/sessions",
       collection: 'mySessions'
     });
     
