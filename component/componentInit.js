@@ -10,8 +10,10 @@ export const Components = {
     ExpenseTotal: componentLoader.add('ExpenseTotal', path.join(__dirname,'../component/ExpenseTotal')),
     IncomeTotal: componentLoader.add('IncomeTotal', path.join(__dirname,'../component/IncomeTotal')),
     ClientIncomeTotal: componentLoader.add('ClientIncomeTotal', path.join(__dirname,'../component/ClientIncomeTotal')),
-    ClientExpenseTotal: componentLoader.add('ClientExpenseTotal', path.join(__dirname,'../component/ClientTotalExpense')),
+    // ClientExpenseTotal: componentLoader.add('ClientExpenseTotal', path.join(__dirname,'../component/ClientTotalExpense')),
     // PdfGen: componentLoader.add('Pdf', path.join(__dirname,'component/Pdf'))
-    PdfGen: componentLoader.add('Pdf', path.join(__dirname,'../component/PDFGenerator'))
+    PdfGen: componentLoader.add('Pdf', path.join(__dirname,'../component/PDFGenerator')),
+    BulkPdfGen: componentLoader.add('BulkPdfGen', path.join(__dirname,'../component/BulkPDFgenerator')),
+    Paymentpayable: componentLoader.add('Paymentpayable', path.join(__dirname,'../component/Paymentpayable'))
     // other custom components
   }

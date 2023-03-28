@@ -13,7 +13,7 @@ import  AdminJSMongoose from '@adminjs/mongoose';
 import  {Employees} from './Models/employees.js'
 import  {Agent} from './Models/agent.js'
 import  {Employers} from './Models/employers.js'
-
+import  {ClientsS1} from './Models/clientsS1.js';
 import  {Income} from './Models/income.js'
 import  {Expense} from './Models/expense.js'
 import {Users} from './Models/users.js'
@@ -31,7 +31,9 @@ import pdfGenerator from './component/Pdf.js'
 
 // Import Components
 import path from 'path'
-import {Components,componentLoader,__dirname} from './component/componentInit.js'
+import {Components,componentLoader} from './component/componentInit.js'
+import fileDirName from './file-dir-name.js'
+export const {__dirname,__filename} = fileDirName(import.meta)
 
 
 
@@ -40,7 +42,7 @@ AdminJS.registerAdapter({
   Database: AdminJSMongoose.Database,
 })
 
-const PORT = process.env.PORT || 3490
+const PORT = process.env.PORT || 3004
 const DEFAULT_ADMIN = {
   email: 'admin@example.com',
   password: 'password',
@@ -82,8 +84,8 @@ const start = async () => {
 
   try {
     await mongoose.connect(
-      // "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
-      "mongodb://localhost:27017/agency"
+      "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
+      // "mongodb://localhost:27017/agency"
       );
     } catch (error) {
       console.error(error);
@@ -226,7 +228,7 @@ const start = async () => {
                     const { record, currentAdmin } = context
                     return {
                         record: record.toJSON(currentAdmin),
-                        url: pdfGenerator(record.toJSON(currentAdmin),'employees')
+                        url: pdfGenerator(record.toJSON(currentAdmin),'employers')
                     }
                 }
             },
@@ -468,8 +470,8 @@ const start = async () => {
       )
     // const adminRouter = AdminJSExpress.buildRouter(admin)
       app.use(admin.options.rootPath, adminRouter)
-      app.use(express.static(path.join(__dirname, "./public")));
-      app.use(express.static(path.join(__dirname, "./pdfs")));
+      app.use(express.static(path.join(__dirname, "public")));
+      app.use(express.static(path.join(__dirname, "pdfs")));
 
       app.get('/',(req,res)=>{
         return res.send('Working');

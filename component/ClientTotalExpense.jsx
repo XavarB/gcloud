@@ -14,7 +14,7 @@ console.log(lastPart)
 
   
     
-      const clientsexpensetotal =  expense.Medical_expenses + expense.Pakistan_Office_exp + expense.Pakistan_Sal + expense.Pakistan_Gov_fee + expense.Pakistan_Comission + expense.Others_Pakistan_exp + expense.Malaysia_Office_exp + expense.Malaysia_sal + expense.Malaysia_Gov_fee + expense.Malaysia_Comission + expense.Others_Malaysia_exp
+      const clientsexpensetotal =  parseInt(expense.Medical_expenses) + parseInt(expense.Pakistan_Office_exp) + parseInt(expense.Pakistan_Sal) + parseInt(expense.Pakistan_Gov_fee) + parseInt(expense.Pakistan_Comission) + parseInt(expense.Others_Pakistan_exp) + parseInt(expense.Malaysia_Office_exp) + parseInt(expense.Malaysia_sal) + parseInt(expense.Malaysia_Gov_fee) + parseInt(expense.Malaysia_Comission) + parseInt(expense.Others_Malaysia_exp)
 
 
       console.log(clientsexpensetotal);

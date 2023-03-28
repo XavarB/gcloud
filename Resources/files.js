@@ -12,32 +12,41 @@ export const files = {
   resource: File,
   options: {
     properties: {
-      name: { type: 'String',  },
-      bucket: {type: 'string', },
-      mime: { type: 'string', },
-      comment: {type: 'string', required:true },
+    
+      bucket: {
+        type: 'string',
+       
+      },
+      mime: {
+        type: 'string',
+       
+      },
+      comment: {
+        type: 'textarea',
+        isSortable: false,
+      },
     },
     actions:{  
-      new: {
-        isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor',
-      },
-      list:{
-        isAccessible:({currentAdmin})=>currentAdmin.role ==='admin'  || currentAdmin.role ==='editor',
-      },
-      delete:{
-        isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'
-      },
-      bulkDelete:{
-        isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
-      },
-      edit: {
+      // new: {
+      //   isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor',
+      // },
+      // list:{
+      //   isAccessible:({currentAdmin})=>currentAdmin.role ==='admin'  || currentAdmin.role ==='editor',
+      // },
+      // delete:{
+      //   isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin'
+      // },
+      // bulkDelete:{
+      //   isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+      // },
+      // edit: {
        
-        isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
-      },
-      show: {
+      //   isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+      // },
+      // show: {
         
-        isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
-      },
+      //   isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
+      // },
     },
   },
   features: [
@@ -48,6 +57,58 @@ export const files = {
       },
       validation: { mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'] },
     }),
+    uploadFeature({
+      provider: {
+        local: {
+          bucket: 'public/files',
+          opts: {
+            baseUrl: '/files',
+          },
+        }
+      },
+      properties: {
+        key: `media.big.path`,
+        mimeType: `media.big.mimeType`,
+        size: `media.big.size`,
+        bucket: `media.big.bucket`,
+        filename: `media.big.filename`,
+        file: `media.big.file`,
+        filePath: `media.big.filePath`,
+        filesToDelete: `media.big.filesToDelete`,
+      },
+      validation: {
+        mimeTypes: ['image/jpeg', 'image/png']
+      },
+      uploadPath: (record, filename) => (
+        `${record.id()}/media.big/${filename}`
+      ),
+    }),
+    uploadFeature({
+      provider: {
+        local: {
+          bucket: 'public/files',
+          opts: {
+            baseUrl: '/files',
+          },
+        }
+      },
+      properties: {
+        key: `media.small.path`,
+        mimeType: `media.small.mimeType`,
+        size: `media.small.size`,
+        bucket: `media.small.bucket`,
+        filename: `media.small.filename`,
+        file: `media.small.file`,
+        filePath: `media.small.filePath`,
+        filesToDelete: `media.small.filesToDelete`,
+      },
+      validation: {
+        mimeTypes: ['image/jpeg', 'image/png']
+      },
+      uploadPath: (record, filename) => (
+        `${record.id()}/media.small/${filename}`
+      ),
+    })
   ],
 };
 // module.exports = {files}

@@ -4,7 +4,7 @@ import {props} from 'adminjs'
 export default function IncomeTotal(props) {
     const {record,property} = props
 const {params} = record
-    const sum = params.Client_income +params.Agent_or_Agency_income + params.Employer_income + params.other_Incomes 
+    const sum = parseInt( params.Client_income ) + parseInt(params.Agent_or_Agency_income) + parseInt(params.Employer_income) + parseInt(params.other_Incomes) 
 
     console.log(params)
   return (

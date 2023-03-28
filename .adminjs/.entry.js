@@ -11,6 +11,18 @@ import Component4 from '../node_modules/@adminjs/upload/src/features/upload-file
 AdminJS.UserComponents.Component4 = Component4
 import Component5 from '../node_modules/@adminjs/upload/src/features/upload-file/components/show'
 AdminJS.UserComponents.Component5 = Component5
+import Component6 from '../node_modules/@adminjs/upload/src/features/upload-file/components/edit'
+AdminJS.UserComponents.Component6 = Component6
+import Component7 from '../node_modules/@adminjs/upload/src/features/upload-file/components/list'
+AdminJS.UserComponents.Component7 = Component7
+import Component8 from '../node_modules/@adminjs/upload/src/features/upload-file/components/show'
+AdminJS.UserComponents.Component8 = Component8
+import Component9 from '../node_modules/@adminjs/upload/src/features/upload-file/components/edit'
+AdminJS.UserComponents.Component9 = Component9
+import Component10 from '../node_modules/@adminjs/upload/src/features/upload-file/components/list'
+AdminJS.UserComponents.Component10 = Component10
+import Component11 from '../node_modules/@adminjs/upload/src/features/upload-file/components/show'
+AdminJS.UserComponents.Component11 = Component11
 import Dashboard from '../dashboard'
 AdminJS.UserComponents.Dashboard = Dashboard
 import ExpenseTotal from '../component/ExpenseTotal'
@@ -19,7 +31,9 @@ import IncomeTotal from '../component/IncomeTotal'
 AdminJS.UserComponents.IncomeTotal = IncomeTotal
 import ClientIncomeTotal from '../component/ClientIncomeTotal'
 AdminJS.UserComponents.ClientIncomeTotal = ClientIncomeTotal
-import ClientExpenseTotal from '../component/ClientTotalExpense'
-AdminJS.UserComponents.ClientExpenseTotal = ClientExpenseTotal
 import Pdf from '../component/PDFGenerator'
 AdminJS.UserComponents.Pdf = Pdf
+import BulkPdfGen from '../component/BulkPDFgenerator'
+AdminJS.UserComponents.BulkPdfGen = BulkPdfGen
+import Paymentpayable from '../component/Paymentpayable'
+AdminJS.UserComponents.Paymentpayable = Paymentpayable

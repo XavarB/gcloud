@@ -14,7 +14,7 @@ console.log(lastPart)
 
   
     
-      const clientsincometotal = income.Client_income + income.Agent_or_Agency_income + income.Employer_income + income.other_Incomes
+      const clientsincometotal = parseInt(income.Client_income) + parseInt(income.Agent_or_Agency_income )+ parseInt(income.Employer_income )+ parseInt(income.other_Incomes)
 
       if (lastPart==='show'){
         return (

@@ -6,7 +6,7 @@ const AgentSchema = new mongoose.Schema(
       name: { type: 'String',  },
       agency_name: { type: 'String',  },
       address: { type: 'String',  },
-      contact: { type: Number,  },
+      contact: { type: 'String',  },
       email: { type: 'string',  },
       
 

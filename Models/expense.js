@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { ClientsS1 } from './clientsS1.js';
+// import { ClientsS1 } from './clientsS1.js';
 
 const ExpenseSchema = new mongoose.Schema(
   {
@@ -17,10 +17,10 @@ const ExpenseSchema = new mongoose.Schema(
     Malaysia_Gov_fee: { type: Number,  },
     Malaysia_Comission: { type: Number,  },
     Others_Malaysia_exp: { type: Number,  },
-    client: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ClientsS1"
-    }
+    // client: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "ClientsS1"
+    // }
   
   
   

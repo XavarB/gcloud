@@ -1,5 +1,12 @@
 import mongoose from 'mongoose'
 
+const mediaSchema = new mongoose.Schema({
+  path: { type: String },
+  mimeType: String,
+  size: Number,
+  filename: String,
+  bucket: String,
+});
 
 const FileSchema = new mongoose.Schema(
   {
@@ -9,7 +16,10 @@ const FileSchema = new mongoose.Schema(
       mime: { type: 'String',  },
       comment: { type: 'string'| null,  },
       path:{type: 'string' | null},
-      
+      media: {
+        big: mediaSchema,
+        small: mediaSchema
+      },
 
   }
   // {

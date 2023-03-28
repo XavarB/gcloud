@@ -4,7 +4,7 @@ import {props} from 'adminjs'
 export default function ExpenseTotal(props) {
     const {record,property} = props
 const {params} = record
-    const sum = params.Medical_expenses + params.Pakistan_Office_exp + params.Pakistan_Sal + params.Pakistan_Gov_fee + params.Pakistan_Comission + params.Others_Pakistan_exp + params.Malaysia_Office_exp + params.Malaysia_sal + params.Malaysia_Gov_fee + params.Malaysia_Comission + params.Others_Malaysia_exp
+    const sum = parseInt(params.Medical_expenses) + parseInt(params.Pakistan_Office_exp) + parseInt(params.Pakistan_Sal) + parseInt(params.Pakistan_Gov_fee) + parseInt(params.Pakistan_Comission) + parseInt(params.Others_Pakistan_exp) + parseInt(params.Malaysia_Office_exp) + parseInt(params.Malaysia_sal) + parseInt(params.Malaysia_Gov_fee) + parseInt(params.Malaysia_Comission )+ parseInt(params.Others_Malaysia_exp)
 
     console.log('Working');
 

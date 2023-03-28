@@ -5,10 +5,10 @@ import { ClientsS1 } from './clientsS1.js';
 const IncomeSchema = new mongoose.Schema(
   {
     Name: { type: 'String', required:true },
-    Client_income: { type: Number,  },
-    Agent_or_Agency_income: { type: Number,  },
-    Employer_income: { type: Number,  },
-    other_Incomes: { type: Number,  },
+    Client_income: { type: 'String',  },
+    Agent_or_Agency_income: { type: 'String',  },
+    Employer_income: { type: 'String',  },
+    other_Incomes: { type: 'String',  },
     client: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClientsS1"
