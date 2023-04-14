@@ -1,6 +1,12 @@
 import uploadFeature from '@adminjs/upload';
 import { File } from '../Models/file.js';
 
+const GCScredentials = {
+  serviceAccount: 'service-707043467119@gs-project-accounts.iam.gserviceaccount.com',
+  bucket: 'farishta_adminjs',
+  expires: 0,
+};
+
 const localProvider = {
   bucket: 'public/files',
   opts: {
@@ -51,7 +57,7 @@ export const files = {
   },
   features: [
     uploadFeature({
-      provider: { local: localProvider },
+      provider: { local:GCScredentials },
       properties: {
         key: 'path',
       },
