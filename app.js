@@ -84,7 +84,7 @@ const start = async () => {
 
   try {
     await mongoose.connect(
-      "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/test"
+      "mongodb+srv://zawarbashir321:HXsjqdhHnYJOeO0u@farishta.ufyzebb.mongodb.net/Fasrishta_Enterprise"
       // "mongodb://localhost:27017/agency"
       );
     } catch (error) {
