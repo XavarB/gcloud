@@ -3,7 +3,7 @@ import { File } from '../Models/file.js';
 
 const GCScredentials = {
   serviceAccount: 'service-707043467119@gs-project-accounts.iam.gserviceaccount.com',
-  bucket: 'farishta_adminjs',
+  bucket: 'farisht_adminjs',
   expires: 0,
 };
 
