@@ -3,7 +3,7 @@ import { File } from '../Models/file.js';
 
 const GCScredentials = {
   serviceAccount: 'service-707043467119@gs-project-accounts.iam.gserviceaccount.com',
-  bucket: 'farisht_adminjs',
+  bucket: 'ar_farishta',
   expires: 0,
 };
 
@@ -57,7 +57,7 @@ export const files = {
   },
   features: [
     uploadFeature({
-      provider: { local:GCScredentials },
+      provider: { gcp:GCScredentials },
       properties: {
         key: 'path',
       },
