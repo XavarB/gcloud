@@ -2,7 +2,9 @@ import { ClientsS1 } from '../Models/clientsS1.js';
 import { Components } from '../component/componentInit.js'
 import pdfGenerator from '../component/Pdf.js'
 import bulkPdfGenerator from '../component/bulkPdf.js'
-
+import path from 'path'
+import fileDirName from '../file-dir-name.js'
+export const {__dirname,__filename} = fileDirName(import.meta)
 
 import uploadFeature from '@adminjs/upload';
 const localProvider = {
@@ -10,6 +12,14 @@ const localProvider = {
   opts: {
     baseUrl: '/files/clients1',
   },
+};
+
+const GCScredentials = {
+  serviceAccount: 'farishta@thinking-park-382005.iam.gserviceaccount.com',
+  bucket: 'ar_farishta',
+  key:path.join(__dirname,"../thinking-park-382005-7da47767c960.json"),
+  expires: 0,
+  projectId:'thinking-park-382005',
 };
 
 
@@ -102,7 +112,7 @@ export const clientResource = {
   },
   features: [
     uploadFeature({
-      provider: { local: localProvider },
+      provider: { gcp: GCScredentials },
       properties: {
         description: "User's Linkedin/Github/social profiles links",
         key: 'path',
