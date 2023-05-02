@@ -57,7 +57,7 @@ export const files = {
   },
   features: [
     uploadFeature({
-      provider: { gcp:GCScredentials },
+      provider: { local:localProvider },
       properties: {
         key: 'path',
       },

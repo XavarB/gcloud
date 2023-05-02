@@ -81,7 +81,7 @@ const pdfGenerator = (record,type = 'null') => {
     doc.text(params.Contract_submission_date, 72, 198) // example database column called orderNum
     doc.text(params.Total_payment, 55, 207) // example database column called orderNum
     doc.text(params.Payment_paid, 62, 216) // example database column called orderNum
-    doc.text(params.Payment_balance, 60, 227) // example database column called orderNum
+    doc.text(params.Paymentpayable, 60, 227) // example database column called orderNum
     doc.text(params.Calling_date, 143, 108) // example database column called orderNum
     doc.text(params.Protector_date, 148, 99) // example database column called orderNum
     doc.text(params.Visa_status, 140, 71.5) // example database column called orderNum

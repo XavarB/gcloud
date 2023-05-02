@@ -8,9 +8,9 @@ export const {__dirname,__filename} = fileDirName(import.meta)
 
 import uploadFeature from '@adminjs/upload';
 const localProvider = {
-  bucket: 'public/files/clients1',
+  bucket: 'public/files',
   opts: {
-    baseUrl: '/files/clients1',
+    baseUrl: '/files',
   },
 };
 
@@ -112,7 +112,7 @@ export const clientResource = {
   },
   features: [
     uploadFeature({
-      provider: { gcp: GCScredentials },
+      provider: { local:localProvider },
       properties: {
         description: "User's Linkedin/Github/social profiles links",
         key: 'path',
