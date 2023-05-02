@@ -153,10 +153,10 @@ const start = async () => {
                 }
             },
               new: {
-                isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
+                isAccessible: ({currentAdmin}) => currentAdmin.role ==='admin' || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
               },
               list:{
-                isAccessible:({currentAdmin})=>currentAdmin.role ==='admin'  || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
+                isAccessible:({currentAdmin}) => currentAdmin.role ==='admin'  || currentAdmin.role ==='editor'|| currentAdmin.role ==='guest',
               },
               delete:{
                 isAccessible: ({currentAdmin})=>currentAdmin.role ==='admin',
@@ -448,27 +448,27 @@ const start = async () => {
 
     admin.watch()
     
-    // const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
-    //   admin,
-    //     {
-    //     authenticate,
-    //     cookieName: 'adminjs',
-    //     cookiePassword: 'sessionsecret',
-    //   },
-    //   null,
-    //   {
-    //     store: store,
-    //     resave: true,
-    //     saveUninitialized: true,
-    //     secret: 'sessionsecret',
-    //     cookie: {
-    //       httpOnly: process.env.NODE_ENV === 'production',
-    //       secure: process.env.NODE_ENV === 'production',
-    //     },
-    //     name: 'adminjs',
-    //   }
-    //   )
-    const adminRouter = AdminJSExpress.buildRouter(admin)
+    const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
+      admin,
+        {
+        authenticate,
+        cookieName: 'adminjs',
+        cookiePassword: 'sessionsecret',
+      },
+      null,
+      {
+        store: store,
+        resave: true,
+        saveUninitialized: true,
+        secret: 'sessionsecret',
+        cookie: {
+          httpOnly: process.env.NODE_ENV === 'production',
+          secure: process.env.NODE_ENV === 'production',
+        },
+        name: 'adminjs',
+      }
+      )
+    // const adminRouter = AdminJSExpress.buildRouter(admin)
       app.use(admin.options.rootPath, adminRouter)
       app.use(express.static(path.join(__dirname, "public")));
       app.use(express.static(path.join(__dirname, "pdfs")));
