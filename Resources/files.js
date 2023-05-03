@@ -10,7 +10,7 @@ const GCScredentials = {
 const localProvider = {
   bucket: 'public/files',
   opts: {
-    baseUrl: '/files',
+    baseUrl: 'files',
   },
 };
 
@@ -57,64 +57,65 @@ export const files = {
   },
   features: [
     uploadFeature({
-      provider: { local:localProvider },
+      provider: { gcp:GCScredentials },
       properties: {
-        key: 'path',
+        key: 'file',
       },
+      multiple:true,
       validation: { mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'] },
     }),
-    uploadFeature({
-      provider: {
-        local: {
-          bucket: 'public/files',
-          opts: {
-            baseUrl: '/files',
-          },
-        }
-      },
-      properties: {
-        key: `media.big.path`,
-        mimeType: `media.big.mimeType`,
-        size: `media.big.size`,
-        bucket: `media.big.bucket`,
-        filename: `media.big.filename`,
-        file: `media.big.file`,
-        filePath: `media.big.filePath`,
-        filesToDelete: `media.big.filesToDelete`,
-      },
-      validation: {
-        mimeTypes: ['image/jpeg', 'image/png']
-      },
-      uploadPath: (record, filename) => (
-        `${record.id()}/media.big/${filename}`
-      ),
-    }),
-    uploadFeature({
-      provider: {
-        local: {
-          bucket: 'public/files',
-          opts: {
-            baseUrl: '/files',
-          },
-        }
-      },
-      properties: {
-        key: `media.small.path`,
-        mimeType: `media.small.mimeType`,
-        size: `media.small.size`,
-        bucket: `media.small.bucket`,
-        filename: `media.small.filename`,
-        file: `media.small.file`,
-        filePath: `media.small.filePath`,
-        filesToDelete: `media.small.filesToDelete`,
-      },
-      validation: {
-        mimeTypes: ['image/jpeg', 'image/png']
-      },
-      uploadPath: (record, filename) => (
-        `${record.id()}/media.small/${filename}`
-      ),
-    })
+    // uploadFeature({
+    //   provider: {
+    //     local: {
+    //       bucket: 'public/files',
+    //       opts: {
+    //         baseUrl: '/files',
+    //       },
+    //     }
+    //   },
+    //   properties: {
+    //     key: `media.big.path`,
+    //     mimeType: `media.big.mimeType`,
+    //     size: `media.big.size`,
+    //     bucket: `media.big.bucket`,
+    //     filename: `media.big.filename`,
+    //     file: `media.big.file`,
+    //     filePath: `media.big.filePath`,
+    //     filesToDelete: `media.big.filesToDelete`,
+    //   },
+    //   validation: {
+    //     mimeTypes: ['image/jpeg', 'image/png']
+    //   },
+    //   uploadPath: (record, filename) => (
+    //     `${record.id()}/media.big/${filename}`
+    //   ),
+    // }),
+    // uploadFeature({
+    //   provider: {
+    //     local: {
+    //       bucket: 'public/files',
+    //       opts: {
+    //         baseUrl: '/files',
+    //       },
+    //     }
+    //   },
+    //   properties: {
+    //     key: `media.small.path`,
+    //     mimeType: `media.small.mimeType`,
+    //     size: `media.small.size`,
+    //     bucket: `media.small.bucket`,
+    //     filename: `media.small.filename`,
+    //     file: `media.small.file`,
+    //     filePath: `media.small.filePath`,
+    //     filesToDelete: `media.small.filesToDelete`,
+    //   },
+    //   validation: {
+    //     mimeTypes: ['image/jpeg', 'image/png']
+    //   },
+    //   uploadPath: (record, filename) => (
+    //     `${record.id()}/media.small/${filename}`
+    //   ),
+    // })
   ],
 };
 // module.exports = {files}

@@ -15,11 +15,12 @@ const FileSchema = new mongoose.Schema(
       bucket: { type: 'String',  },
       mime: { type: 'String',  },
       comment: { type: 'string'| null,  },
-      path:{type: 'string' | null},
-      media: {
-        big: mediaSchema,
-        small: mediaSchema
-      },
+      filePath:{type:'Array'| null},
+      path:{type: 'Array' | null},
+      // media: {
+      //   big: mediaSchema,
+      //   small: mediaSchema
+      // },
 
   }
   // {
