@@ -59,9 +59,9 @@ export const files = {
     uploadFeature({
       provider: { gcp:GCScredentials },
       properties: {
-        key: 'file',
+        key: 'path',
       },
-      multiple:true,
+      multiple:false,
       validation: { mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'] },
     }),
     // uploadFeature({
